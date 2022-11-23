@@ -20,7 +20,7 @@ public class NumbersActivity extends AppCompatActivity {
 
         List<Word> words = createWordsCollection();
 
-        ArrayAdapter<Word> itemsAdapter = new ArrayAdapter<>(this, R.layout.list_item, words);
+        WordAdapter itemsAdapter = new WordAdapter(this, words);
         ListView listView = findViewById(R.id.numbersList);
         listView.setAdapter(itemsAdapter);
     }
