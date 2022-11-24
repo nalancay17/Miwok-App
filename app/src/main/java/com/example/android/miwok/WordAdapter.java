@@ -8,13 +8,21 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+
 import java.util.List;
 
 public class WordAdapter extends ArrayAdapter<Word> {
 
-    public WordAdapter(Context context, List<Word> words) {
+    /**
+     * Resource ID for the background color to this list of words
+     */
+    private int colorResourceId;
+
+    public WordAdapter(Context context, List<Word> words, int colorResourceId) {
         // 0 porque no usaremos ningun layout como base para los diseños de las Views que producira el adapter
         super(context, 0, words);
+        this.colorResourceId = colorResourceId;
     }
 
     /**
@@ -36,6 +44,7 @@ public class WordAdapter extends ArrayAdapter<Word> {
 
         setTexts(word, convertView);
         setImage(word, convertView);
+        setColor(convertView);
 
         // Return the completed view to render on screen
         return convertView;
@@ -57,6 +66,13 @@ public class WordAdapter extends ArrayAdapter<Word> {
             itemImage.setImageResource(word.getImageResourceId());
         else
             itemImage.setVisibility(View.GONE);
+    }
+
+    private void setColor(View convertView) {
+        View itemContainer = convertView.findViewById(R.id.items_text_layout);
+        // Find the color that the resource ID maps to
+        int color = ContextCompat.getColor(getContext(), colorResourceId);
+        itemContainer.setBackgroundColor(color);
     }
 
 }

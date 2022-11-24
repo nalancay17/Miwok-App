@@ -17,7 +17,7 @@ public class PhrasesActivity extends AppCompatActivity {
 
         List<Word> words = createPhrasesCollection();
 
-        WordAdapter itemsAdapter = new WordAdapter(this, words);
+        WordAdapter itemsAdapter = new WordAdapter(this, words, R.color.category_phrases);
         ListView listView = findViewById(R.id.wordsList);
         listView.setAdapter(itemsAdapter);
     }
