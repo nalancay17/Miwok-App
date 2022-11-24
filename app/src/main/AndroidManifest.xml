@@ -16,6 +16,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".NumbersActivity"
             android:exported="false"
@@ -24,6 +25,7 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
         <activity
             android:name=".FamilyActivity"
             android:exported="false"
@@ -32,6 +34,7 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
         <activity
             android:name=".ColorsActivity"
             android:exported="false"
@@ -40,6 +43,7 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
         <activity
             android:name=".PhrasesActivity"
             android:exported="false"

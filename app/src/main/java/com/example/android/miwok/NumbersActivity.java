@@ -15,14 +15,14 @@ public class NumbersActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.word_list);
 
-        List<Word> words = createWordsCollection();
+        List<Word> words = createNumbersCollection();
 
         WordAdapter itemsAdapter = new WordAdapter(this, words, R.color.category_numbers);
         ListView listView = findViewById(R.id.wordsList);
         listView.setAdapter(itemsAdapter);
     }
 
-    private List<Word> createWordsCollection() {
+    private List<Word> createNumbersCollection() {
         ArrayList<Word> words = new ArrayList<>();
         words.add(new Word("one", "lutti", R.drawable.number_one));
         words.add(new Word("two", "otiiko", R.drawable.number_two));
@@ -36,5 +36,4 @@ public class NumbersActivity extends AppCompatActivity {
         words.add(new Word("ten", "na´aacha", R.drawable.number_ten));
         return words;
     }
-
 }
