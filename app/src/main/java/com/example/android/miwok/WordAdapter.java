@@ -53,7 +53,10 @@ public class WordAdapter extends ArrayAdapter<Word> {
 
     private void setImage(Word word, View convertView) {
         ImageView itemImage = convertView.findViewById(R.id.item_image);
-        itemImage.setImageResource(word.getImageResourceId());
+        if (word.hasImage())
+            itemImage.setImageResource(word.getImageResourceId());
+        else
+            itemImage.setVisibility(View.GONE);
     }
 
 }

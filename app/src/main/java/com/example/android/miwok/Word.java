@@ -19,7 +19,9 @@ public class Word {
     /**
      * Image resource ID for de word
      */
-    private int imageResourceId;
+    private int imageResourceId = NO_IMAGE_PROVIDED;
+
+    private static final int NO_IMAGE_PROVIDED = -1;
 
     /**
      * @param defaultTranslation is the word in a language that the user is already familiar with
@@ -62,4 +64,10 @@ public class Word {
         return imageResourceId;
     }
 
+    /**
+     * Returns whether or not there is an image for this word
+     */
+    public boolean hasImage() {
+        return imageResourceId != NO_IMAGE_PROVIDED;
+    }
 }
