@@ -17,6 +17,11 @@ public class Word {
     private String miwokTranslation;
 
     /**
+     * Image resource ID for de word
+     */
+    private int imageResourceId;
+
+    /**
      * @param defaultTranslation is the word in a language that the user is already familiar with
      *                           (such as English)
      * @param miwokTranslation   is the word in the Miwok language
@@ -24,6 +29,18 @@ public class Word {
     public Word(String defaultTranslation, String miwokTranslation) {
         this.defaultTranslation = defaultTranslation;
         this.miwokTranslation = miwokTranslation;
+    }
+
+    /**
+     * @param defaultTranslation is the word in a language that the user is already familiar with
+     *                           (such as English)
+     * @param miwokTranslation   is the word in the Miwok language
+     * @param imageResourceId    is the drawable resource ID for the image associated with the word
+     */
+    public Word(String defaultTranslation, String miwokTranslation, int imageResourceId) {
+        this.defaultTranslation = defaultTranslation;
+        this.miwokTranslation = miwokTranslation;
+        this.imageResourceId = imageResourceId;
     }
 
     /**
@@ -40,5 +57,9 @@ public class Word {
         return miwokTranslation;
     }
 
+    /** Return the image resource ID for the word. */
+    public int getImageResourceId() {
+        return imageResourceId;
+    }
 
 }
