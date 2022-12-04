@@ -23,6 +23,12 @@ public class NumbersActivity extends AppCompatActivity {
         WordAdapter itemsAdapter = new WordAdapter(this, words, R.color.category_numbers);
         ListView listView = findViewById(R.id.wordsList);
         listView.setAdapter(itemsAdapter);
+
+        listView.setOnItemClickListener((adapterView, view, position, id) -> {
+            Word currentWord = words.get(position);
+            player = MediaPlayer.create(NumbersActivity.this, currentWord.getAudioResourceId());
+            player.start();
+        });
     }
 
     private List<Word> createNumbersCollection() {
