@@ -21,16 +21,25 @@ public class Word {
      */
     private int imageResourceId = NO_IMAGE_PROVIDED;
 
+    /**
+     * Constant value that represents no image was provided for this word
+     */
     private static final int NO_IMAGE_PROVIDED = -1;
+
+    /**
+     * Audio resource ID for the word
+     */
+    private int audioResourceId;
 
     /**
      * @param defaultTranslation is the word in a language that the user is already familiar with
      *                           (such as English)
      * @param miwokTranslation   is the word in the Miwok language
      */
-    public Word(String defaultTranslation, String miwokTranslation) {
+    public Word(String defaultTranslation, String miwokTranslation, int audioResourceId) {
         this.defaultTranslation = defaultTranslation;
         this.miwokTranslation = miwokTranslation;
+        this.audioResourceId = audioResourceId;
     }
 
     /**
@@ -39,10 +48,11 @@ public class Word {
      * @param miwokTranslation   is the word in the Miwok language
      * @param imageResourceId    is the drawable resource ID for the image associated with the word
      */
-    public Word(String defaultTranslation, String miwokTranslation, int imageResourceId) {
+    public Word(String defaultTranslation, String miwokTranslation, int imageResourceId, int audioResourceId) {
         this.defaultTranslation = defaultTranslation;
         this.miwokTranslation = miwokTranslation;
         this.imageResourceId = imageResourceId;
+        this.audioResourceId = audioResourceId;
     }
 
     /**
