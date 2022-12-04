@@ -2,6 +2,7 @@ package com.example.android.miwok;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.widget.ListView;
 
@@ -9,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FamilyActivity extends AppCompatActivity {
+
+    private MediaPlayer player;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +23,12 @@ public class FamilyActivity extends AppCompatActivity {
         WordAdapter itemsAdapter = new WordAdapter(this, words, R.color.category_family);
         ListView listView = findViewById(R.id.wordsList);
         listView.setAdapter(itemsAdapter);
+
+        listView.setOnItemClickListener((adapterView, view, position, id) -> {
+            Word currentWord = words.get(position);
+            player = MediaPlayer.create(FamilyActivity.this, currentWord.getAudioResourceId());
+            player.start();
+        });
     }
 
     private List<Word> createFamilyCollection() {
