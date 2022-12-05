@@ -12,6 +12,7 @@ import java.util.List;
 public class FamilyActivity extends AppCompatActivity {
 
     private MediaPlayer player;
+    private MediaPlayer.OnCompletionListener completionListener = completion -> releaseMediaPlayer();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,9 +27,26 @@ public class FamilyActivity extends AppCompatActivity {
 
         listView.setOnItemClickListener((adapterView, view, position, id) -> {
             Word currentWord = words.get(position);
+
+            // Release player if it currently exits to play a different sound file
+            releaseMediaPlayer();
             player = MediaPlayer.create(FamilyActivity.this, currentWord.getAudioResourceId());
             player.start();
+            player.setOnCompletionListener(completionListener);
         });
+    }
+
+    /**
+     * Clean up the media player by releasing its resources.
+     */
+    private void releaseMediaPlayer() {
+        if (player != null) {
+            player.release();
+
+            // For our code, we've decided that setting the media player to null is an easy way to
+            // tell that the media player is not configured to play an audio file at the moment.
+            player = null;
+        }
     }
 
     private List<Word> createFamilyCollection() {
