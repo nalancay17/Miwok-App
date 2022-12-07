@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -34,6 +35,13 @@ public class NumbersActivity extends AppCompatActivity {
             player.start();
             player.setOnCompletionListener(completionListener);
         });
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // Media player resource releasing when activity enters in stopped state
+        releaseMediaPlayer();
     }
 
     /**
