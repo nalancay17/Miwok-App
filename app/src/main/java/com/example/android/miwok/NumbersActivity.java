@@ -2,9 +2,9 @@ package com.example.android.miwok;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -13,13 +13,24 @@ import java.util.List;
 public class NumbersActivity extends AppCompatActivity {
 
     private MediaPlayer player;
-    private MediaPlayer.OnCompletionListener completionListener = completion -> releaseMediaPlayer();
+    private final MediaPlayer.OnCompletionListener completionListener = completion -> releaseMediaPlayer();
+
+    private AudioManager audioManager;
+    private final AudioManager.OnAudioFocusChangeListener focusChangeListener = focusChange -> {
+        if (focusChange == AudioManager.AUDIOFOCUS_GAIN)
+            player.start();
+        else if (focusChange == AudioManager.AUDIOFOCUS_LOSS)
+            releaseMediaPlayer();
+        else if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT || focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK)
+            player.pause();
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.word_list);
 
+        audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
         List<Word> words = createNumbersCollection();
 
         WordAdapter itemsAdapter = new WordAdapter(this, words, R.color.category_numbers);
@@ -29,11 +40,13 @@ public class NumbersActivity extends AppCompatActivity {
         listView.setOnItemClickListener((adapterView, view, position, id) -> {
             Word currentWord = words.get(position);
 
-            // Release player if it currently exits to play a different sound file
-            releaseMediaPlayer();
-            player = MediaPlayer.create(NumbersActivity.this, currentWord.getAudioResourceId());
-            player.start();
-            player.setOnCompletionListener(completionListener);
+            if (makeFocusRequest() == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+                // Release player if it currently exits to play a different sound file
+                releaseMediaPlayer();
+                player = MediaPlayer.create(NumbersActivity.this, currentWord.getAudioResourceId());
+                player.start();
+                player.setOnCompletionListener(completionListener);
+            }
         });
     }
 
@@ -42,6 +55,10 @@ public class NumbersActivity extends AppCompatActivity {
         super.onStop();
         // Media player resource releasing when activity enters in stopped state
         releaseMediaPlayer();
+    }
+
+    private int makeFocusRequest() {
+        return audioManager.requestAudioFocus(focusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
     }
 
     /**
