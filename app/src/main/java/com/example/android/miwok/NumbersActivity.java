@@ -2,8 +2,11 @@ package com.example.android.miwok;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.media.AudioAttributes;
+import android.media.AudioFocusRequest;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.ListView;
 
@@ -16,6 +19,10 @@ public class NumbersActivity extends AppCompatActivity {
     private final MediaPlayer.OnCompletionListener completionListener = completion -> releaseMediaPlayer();
 
     private AudioManager audioManager;
+    private final AudioAttributes attributes = new AudioAttributes.Builder()
+            .setUsage(AudioAttributes.USAGE_MEDIA)
+            .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+            .build();
     private final AudioManager.OnAudioFocusChangeListener focusChangeListener = focusChange -> {
         if (focusChange == AudioManager.AUDIOFOCUS_GAIN)
             player.start();
@@ -58,7 +65,17 @@ public class NumbersActivity extends AppCompatActivity {
     }
 
     private int makeFocusRequest() {
-        return audioManager.requestAudioFocus(focusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
+        // request for api >= 26
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            AudioFocusRequest focusRequest = new AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT)
+                    .setAudioAttributes(attributes)
+                    .setOnAudioFocusChangeListener(focusChangeListener)
+                    .build();
+            return audioManager.requestAudioFocus(focusRequest);
+        }
+        // request for api < 26. deprecated but needed
+        else
+            return audioManager.requestAudioFocus(focusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
     }
 
     /**
