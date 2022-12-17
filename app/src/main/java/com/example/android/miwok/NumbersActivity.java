@@ -19,6 +19,7 @@ public class NumbersActivity extends AppCompatActivity {
     private final MediaPlayer.OnCompletionListener completionListener = completion -> releaseMediaPlayer();
 
     private AudioManager audioManager;
+    private AudioFocusRequest focusRequest;
     private final AudioAttributes attributes = new AudioAttributes.Builder()
             .setUsage(AudioAttributes.USAGE_MEDIA)
             .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
@@ -67,7 +68,7 @@ public class NumbersActivity extends AppCompatActivity {
     private int makeFocusRequest() {
         // request for api >= 26
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            AudioFocusRequest focusRequest = new AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT)
+            focusRequest = new AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT)
                     .setAudioAttributes(attributes)
                     .setOnAudioFocusChangeListener(focusChangeListener)
                     .build();
@@ -88,6 +89,12 @@ public class NumbersActivity extends AppCompatActivity {
             // For our code, we've decided that setting the media player to null is an easy way to
             // tell that the media player is not configured to play an audio file at the moment.
             player = null;
+
+            // Abandon audio focus depending on device version
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+                audioManager.abandonAudioFocusRequest(focusRequest);
+            else
+                audioManager.abandonAudioFocus(focusChangeListener);
         }
     }
 
