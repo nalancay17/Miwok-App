@@ -1,88 +1,75 @@
-package com.example.android.miwok;
+package com.example.android.miwok
 
 /**
- * {@link Word} represents a vocabulary word that the user wants to learn.
+ * [Word] represents a vocabulary word that the user wants to learn.
  * It contains a default translation and a Miwok translation for that word.
  */
-public class Word {
+class Word {
 
     /**
      * Default translation for the word
      */
-    private String defaultTranslation;
+    var defaultTranslation: String
+        private set
 
     /**
      * Miwok translation for the word
      */
-    private String miwokTranslation;
+    var miwokTranslation: String
+        private set
 
     /**
      * Image resource ID for de word
      */
-    private int imageResourceId = NO_IMAGE_PROVIDED;
-
-    /**
-     * Constant value that represents no image was provided for this word
-     */
-    private static final int NO_IMAGE_PROVIDED = -1;
+    var imageResourceId = NO_IMAGE_PROVIDED
+        private set
 
     /**
      * Audio resource ID for the word
      */
-    private int audioResourceId;
+    var audioResourceId: Int
+        private set
 
     /**
      * @param defaultTranslation is the word in a language that the user is already familiar with
-     *                           (such as English)
+     * (such as English)
      * @param miwokTranslation   is the word in the Miwok language
      */
-    public Word(String defaultTranslation, String miwokTranslation, int audioResourceId) {
-        this.defaultTranslation = defaultTranslation;
-        this.miwokTranslation = miwokTranslation;
-        this.audioResourceId = audioResourceId;
+    constructor(defaultTranslation: String, miwokTranslation: String, audioResourceId: Int) {
+        this.defaultTranslation = defaultTranslation
+        this.miwokTranslation = miwokTranslation
+        this.audioResourceId = audioResourceId
     }
 
     /**
      * @param defaultTranslation is the word in a language that the user is already familiar with
-     *                           (such as English)
+     * (such as English)
      * @param miwokTranslation   is the word in the Miwok language
      * @param imageResourceId    is the drawable resource ID for the image associated with the word
      */
-    public Word(String defaultTranslation, String miwokTranslation, int imageResourceId, int audioResourceId) {
-        this.defaultTranslation = defaultTranslation;
-        this.miwokTranslation = miwokTranslation;
-        this.imageResourceId = imageResourceId;
-        this.audioResourceId = audioResourceId;
-    }
-
-    /**
-     * Get the default translation of the word.
-     */
-    public String getDefaultTranslation() {
-        return defaultTranslation;
-    }
-
-    /**
-     * Get the Miwok translation of the word.
-     */
-    public String getMiwokTranslation() {
-        return miwokTranslation;
-    }
-
-    /** Return the image resource ID for the word. */
-    public int getImageResourceId() {
-        return imageResourceId;
-    }
-
-    /** Return audio resource ID for the word. */
-    public int getAudioResourceId() {
-        return audioResourceId;
+    constructor(
+        defaultTranslation: String,
+        miwokTranslation: String,
+        imageResourceId: Int,
+        audioResourceId: Int
+    ) {
+        this.defaultTranslation = defaultTranslation
+        this.miwokTranslation = miwokTranslation
+        this.imageResourceId = imageResourceId
+        this.audioResourceId = audioResourceId
     }
 
     /**
      * Returns whether or not there is an image for this word
      */
-    public boolean hasImage() {
-        return imageResourceId != NO_IMAGE_PROVIDED;
+    fun hasImage(): Boolean {
+        return imageResourceId != NO_IMAGE_PROVIDED
+    }
+
+    companion object {
+        /**
+         * Constant value that represents no image was provided for this word
+         */
+        private const val NO_IMAGE_PROVIDED = -1
     }
 }
