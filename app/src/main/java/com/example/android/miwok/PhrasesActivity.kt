@@ -52,7 +52,7 @@ class PhrasesActivity : AppCompatActivity() {
                 if (makeFocusRequest() == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
                     // Release player if it currently exits to play a different sound file
                     releaseMediaPlayer()
-                    player = MediaPlayer.create(this@PhrasesActivity, currentWord.audioResourceId)
+                    player = MediaPlayer.create(this, currentWord.audioResourceId)
                     player.start()
                     player.setOnCompletionListener(completionListener)
                 }
@@ -90,7 +90,7 @@ class PhrasesActivity : AppCompatActivity() {
             player.release()
 
         // Abandon audio focus depending on device version
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && this::focusRequest.isInitialized)
             audioManager.abandonAudioFocusRequest(focusRequest)
         else
             audioManager.abandonAudioFocus(focusChangeListener)

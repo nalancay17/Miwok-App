@@ -90,7 +90,7 @@ class FamilyActivity : AppCompatActivity() {
             player.release()
 
         // Abandon audio focus depending on device version
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && this::focusRequest.isInitialized)
             audioManager.abandonAudioFocusRequest(focusRequest)
         else
             audioManager.abandonAudioFocus(focusChangeListener)
