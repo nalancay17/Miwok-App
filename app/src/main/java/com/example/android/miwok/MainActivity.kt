@@ -13,39 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.android.miwok;
+package com.example.android.miwok
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.TextView;
+import android.content.Intent
+import android.os.Bundle
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 
-import androidx.appcompat.app.AppCompatActivity;
-
-public class MainActivity extends AppCompatActivity {
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
         // Set the content of the activity to use the activity_main.xml layout file
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main)
 
-        setListListener(findViewById(R.id.numbers), NumbersActivity.class);
-        setListListener(findViewById(R.id.family), FamilyActivity.class);
-        setListListener(findViewById(R.id.colors), ColorsActivity.class);
-        setListListener(findViewById(R.id.phrases), PhrasesActivity.class);
+        setListListener(findViewById(R.id.numbers), NumbersActivity::class.java)
+        setListListener(findViewById(R.id.family), FamilyActivity::class.java)
+        setListListener(findViewById(R.id.colors), ColorsActivity::class.java)
+        setListListener(findViewById(R.id.phrases), PhrasesActivity::class.java)
     }
 
     /**
      * @param view is the view we want to set an onClicklistener.
      * @param cls  is the kind of activity we want to open when the view is clicked.
      */
-    private void setListListener(View view, Class<?> cls) {
-        TextView list = (TextView) view;
-        list.setOnClickListener(caughtEvent -> {
-            Intent openListActivity = new Intent(view.getContext(), cls);
-            startActivity(openListActivity);
-        });
+    private fun setListListener(view: View, cls: Class<*>) {
+        view.setOnClickListener {
+            val openListActivity = Intent(view.context, cls)
+            startActivity(openListActivity)
+        }
     }
 }
